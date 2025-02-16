@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表白小程序</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        #agree-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #disagree-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        .character {
+            margin-top: 20px;
+            font-size: 50px;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="character" id="character">😊</div>
+        <div class="buttons">
+            <button id="agree-btn" onclick="agree()">同意</button>
+            <button id="disagree-btn" onclick="disagree()">不同意</button>
+        </div>
+    </div>
+
+    <script>
+        let disagreeCount = 0;
+        const disagreeBtn = document.getElementById('disagree-btn');
+        const agreeBtn = document.getElementById('agree-btn');
+        const character = document.getElementById('character');
+
+        // 不同意按钮的文字列表
+        const disagreeTexts = ["你干嘛？", "快同意！", "快点！", "必须！"];
+
+        function disagree() {
+            if (disagreeCount < disagreeTexts.length) {
+                // 修改不同意按钮的文字
+                disagreeBtn.innerText = disagreeTexts[disagreeCount];
+                // 逐渐缩小不同意按钮
+                disagreeBtn.style.transform = `scale(${1 - disagreeCount * 0.2})`;
+                // 逐渐放大同意按钮
+                agreeBtn.style.transform = `scale(${1 + disagreeCount * 0.2})`;
+                // 动漫人物表情变化
+                character.innerText = ['😢', '😭', '🥺', '😿'][disagreeCount];
+                disagreeCount++;
+            } else {
+                // 不同意按钮消失
+                disagreeBtn.style.display = 'none';
+                // 同意按钮占据全部空间
+                agreeBtn.style.width = '100%';
+            }
+        }
+
+        function agree() {
+            // 直接隐藏不同意按钮
+            disagreeBtn.style.display = 'none';
+            // 显示拥抱表情和文字
+            character.innerText = '🤗 爱你呦 ❤️';
+            // 禁用按钮
+            agreeBtn.disabled = true;
+            disagreeBtn.disabled = true;
+        }
+    </script>
+</body>
+</html>
